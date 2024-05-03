@@ -1,17 +1,26 @@
 package goravel_admin
 
 import (
-	"github.com/goravel/framework/contracts/route"
+	routeFacade "github.com/goravel/framework/contracts/route"
 	"github.com/onlinedigital/goravel-admin/controllers"
+	"github.com/onlinedigital/goravel-admin/middleware"
 )
 
-func RegisterRoutes(route route.Router, prefix string) {
-	router := route.Prefix(prefix)
+// Import the missing package
+
+func RegisterRoutes(route routeFacade.Router, prefix string) {
+	adminRoute := func() routeFacade.Router {
+		return route.Prefix(prefix)
+	}
+	authenticatedRoute := func() routeFacade.Router {
+		return adminRoute().Middleware(middleware.Authenticated())
+	}
 
 	dashboard := controllers.NewDashboardController()
-	router.Get("/", dashboard.Login)
+	authenticatedRoute().Get("/", dashboard.RedirectFirstPage)
+	authenticatedRoute().Get("/dashboard", dashboard.Index)
 
 	auth := controllers.NewAuthController()
-	router.Get("/login", auth.Login)
+	adminRoute().Get("/login", auth.Login)
 
 }

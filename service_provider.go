@@ -33,5 +33,9 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 
 	app.Publishes("github.com/onlinedigital/goravel-admin", map[string]string{
 		"config/goravel_admin.go": app.ConfigPath("goravel_admin.go"),
-	})
+	}, "goravel-admin-config")
+
+	app.Publishes("github.com/onlinedigital/goravel-admin", map[string]string{
+		"migrations": app.DatabasePath("migrations"),
+	}, "goravel-admin-migrations")
 }

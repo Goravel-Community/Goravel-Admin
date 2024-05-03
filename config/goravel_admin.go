@@ -7,6 +7,7 @@ import (
 func init() {
 	config := facades.Config()
 	config.Add("goravel_admin", map[string]any{
-		"route": "/admin",
+		"route":      "/admin",
+		"first_page": "/dashboard",
 	})
 }
