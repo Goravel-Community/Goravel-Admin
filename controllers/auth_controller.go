@@ -16,6 +16,6 @@ func NewAuthController() *AuthController {
 
 func (r *AuthController) Login(ctx http.Context) http.Response {
 	return ctx.Response().Success().Json(http.Json{
-		"Hello": "Goravel",
+		"sdsds": "you need to login",
 	})
 }

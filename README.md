@@ -5,9 +5,9 @@
 
 ```bash
 # publish configs
-go run . artisan vendor:publish --package=github.com/onlinedigital/goravel-admin --tag=goravel-admin-config
+go run . artisan vendor:publish --package=github.com/goravel-community/goravel-admin --tag=goravel-admin-config
 # publish migrations
-go run . artisan vendor:publish --package=github.com/onlinedigital/goravel-admin --tag=goravel-admin-migrations
+go run . artisan vendor:publish --package=github.com/goravel-community/goravel-admin --tag=goravel-admin-migrations
 # migrate
 go run . artisan migrate
 ```

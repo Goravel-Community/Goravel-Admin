@@ -31,11 +31,11 @@ func (receiver *ServiceProvider) Boot(app foundation.Application) {
 	routePrefix := ConfigFacade.Get("goravel_admin.route", "/admin").(string)
 	RegisterRoutes(RouteFacade, routePrefix)
 
-	app.Publishes("github.com/onlinedigital/goravel-admin", map[string]string{
+	app.Publishes("github.com/goravel-community/goravel-admin", map[string]string{
 		"config/goravel_admin.go": app.ConfigPath("goravel_admin.go"),
 	}, "goravel-admin-config")
 
-	app.Publishes("github.com/onlinedigital/goravel-admin", map[string]string{
+	app.Publishes("github.com/goravel-community/goravel-admin", map[string]string{
 		"migrations": app.DatabasePath("migrations"),
 	}, "goravel-admin-migrations")
 }

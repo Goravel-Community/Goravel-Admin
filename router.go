@@ -1,9 +1,9 @@
 package goravel_admin
 
 import (
+	"github.com/goravel-community/goravel-admin/controllers"
+	"github.com/goravel-community/goravel-admin/middleware"
 	routeFacade "github.com/goravel/framework/contracts/route"
-	"github.com/onlinedigital/goravel-admin/controllers"
-	"github.com/onlinedigital/goravel-admin/middleware"
 )
 
 // Import the missing package

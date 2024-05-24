@@ -1,4 +1,4 @@
-module github.com/onlinedigital/goravel-admin
+module github.com/goravel-community/goravel-admin
 
 go 1.22.0
 

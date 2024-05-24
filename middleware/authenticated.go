@@ -1,9 +1,9 @@
 package middleware
 
 import (
+	"github.com/goravel-community/goravel-admin/models"
 	"github.com/goravel/framework/contracts/http"
 	"github.com/goravel/framework/facades"
-	"github.com/onlinedigital/goravel-admin/models"
 )
 
 func Authenticated() http.Middleware {
