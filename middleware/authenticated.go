@@ -8,9 +8,9 @@ import (
 
 func Authenticated() http.Middleware {
 	return func(ctx http.Context) {
-		guard := facades.Auth().Guard("goravel_admin")
+		guard := facades.Auth(ctx).Guard("goravel_admin")
 		var admin models.Admin
-		err := guard.User(ctx, &admin)
+		err := guard.User(&admin)
 		if err != nil {
 			routePrefix := facades.Config().Get("goravel_admin.route", "/admin").(string)
 			ctx.Response().Redirect(302, routePrefix+"/login")
