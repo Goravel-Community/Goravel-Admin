@@ -8,14 +8,24 @@ import (
 
 func Authenticated() http.Middleware {
 	return func(ctx http.Context) {
-		guard := facades.Auth(ctx).Guard("goravel_admin")
-		var admin models.Admin
-		err := guard.User(&admin)
-		if err != nil {
+		var admin *models.Admin
+		token, haveToken := ctx.Request().Session().Get("goravel_admin_token", "").(string)
+		if haveToken {
+			guard := facades.Auth(ctx).Guard("goravel_admin")
+			_, err := guard.Parse(token)
+			if err == nil {
+				_ = guard.User(&admin)
+			}
+		}
+		ctx.WithValue("admin", admin)
+
+		if admin == nil {
 			routePrefix := facades.Config().Get("goravel_admin.route", "/admin").(string)
-			ctx.Response().Redirect(302, routePrefix+"/login")
+			ctx.Response().Header("Location", routePrefix+"/user/login")
+			ctx.Request().AbortWithStatus(http.StatusFound)
 			return
 		}
+
 		ctx.Request().Next()
 	}
 }

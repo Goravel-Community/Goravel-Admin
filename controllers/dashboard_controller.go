@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/goravel-community/goravel-admin/models"
 	"github.com/goravel/framework/contracts/http"
 	"github.com/goravel/framework/facades"
 )
@@ -22,7 +23,11 @@ func (r *DashboardController) RedirectFirstPage(ctx http.Context) http.Response 
 }
 
 func (r *DashboardController) Index(ctx http.Context) http.Response {
+	welcomeString := "Welcome to the dashboard: guest"
+	if admin, ok := ctx.Value("admin").(*models.Admin); ok && admin != nil {
+		welcomeString = "Welcome to the dashboard: " + admin.Email
+	}
 	return ctx.Response().Success().Json(http.Json{
-		"dashboard": "you are logged",
+		"dashboard": welcomeString,
 	})
 }
