@@ -2,9 +2,9 @@ root = "."
 tmp_dir = "tmp"
 
 [build]
-  bin = "C:/Program Files/Git/usr/bin/true.exe"
+  bin = "/usr/bin/sleep infinity"
   full_bin = ""
-  cmd = "templ generate && go build ./... && cd ../Goravel-Admin-Demo/bootstrap && cat app.go | tee app.go"
+  cmd = "templ generate && go build ./... && touch -m ../goravel-admin-demo/bootstrap/app.go"
   delay = 1000
   exclude_dir = ["tmp", ".git"]
   exclude_file = []
