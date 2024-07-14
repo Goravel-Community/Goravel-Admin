@@ -3,16 +3,16 @@ tmp_dir = "tmp"
 
 [build]
   bin = "C:/Program Files/Git/usr/bin/true.exe"
-  cmd = "go build ./..."
+  full_bin = ""
+  cmd = "templ generate && go build ./... && cd ../Goravel-Admin-Demo/bootstrap && cat app.go | tee app.go"
   delay = 1000
   exclude_dir = ["tmp", ".git"]
   exclude_file = []
-  exclude_regex = []
+  exclude_regex = [".*_templ.go"]
   exclude_unchanged = false
   follow_symlink = false
-  full_bin = ""
   include_dir = []
-  include_ext = ["go", "tpl", "tmpl", "html"]
+  include_ext = ["go", "tpl", "tmpl", "templ", "html"]
   kill_delay = "0s"
   log = "build-errors.log"
   send_interrupt = false

@@ -1,0 +1,31 @@
+package auth
+
+import (
+	"fmt"
+	"github.com/goravel-community/goravel-admin/views/parts"
+	"github.com/goravel-community/goravel-admin/helpers"
+)
+
+templ Login() {
+    @parts.Template() {
+		Goravel Admin Login v3
+		<form method="post" action={ templ.SafeURL(helpers.AdminRoute("/user/login")) }>
+			
+			if req := helpers.GetRequestFromCtx(ctx); req != nil {
+				validation errror : { fmt.Sprint((*req).Session().Get("validationError", "")) }
+				for fieldName, errorMap := range helpers.ValidationErrorsFromRequest(req) {
+					for rule, errorMessage := range errorMap {
+						<div class="alert alert-danger">
+							<strong>Validation for field { fieldName }</strong>
+							<p>{ rule }: { errorMessage }</p>
+						</div>
+					}
+				}
+			}
+			
+			<input type="text" name="email" placeholder="Email" value="admin@admin.com">
+			<input type="password" name="password" placeholder="Password" value="password">
+			<input type="submit" value="Login">
+		</form>
+    }
+}

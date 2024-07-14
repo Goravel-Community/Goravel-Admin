@@ -2,7 +2,10 @@ module github.com/goravel-community/goravel-admin
 
 go 1.22.0
 
-require github.com/goravel/framework v1.14.1
+require (
+	github.com/a-h/templ v0.2.747
+	github.com/goravel/framework v1.14.1
+)
 
 require (
 	atomicgo.dev/cursor v0.2.0 // indirect

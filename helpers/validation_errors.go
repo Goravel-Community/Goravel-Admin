@@ -1,4 +1,8 @@
-package helper
+package helpers
+
+import (
+	"github.com/goravel/framework/contracts/http"
+)
 
 type ValidationErrorsMap map[string]map[string]string
 
@@ -15,4 +19,14 @@ func ValidationErrors(input any) (errors ValidationErrorsMap) {
 		}
 	}
 	return errors
+}
+
+func ValidationErrorsFromRequest(req *http.ContextRequest) (errors ValidationErrorsMap) {
+	if req != nil {
+		validationErrors := (*req).Session().Get("validationErrors")
+		if validationErrors != nil {
+			return ValidationErrors(validationErrors)
+		}
+	}
+	return make(ValidationErrorsMap, 0)
 }

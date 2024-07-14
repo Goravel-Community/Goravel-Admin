@@ -12,8 +12,11 @@ import (
 func RegisterRoutes(route routeFacade.Router, prefix string) {
 	dashboard := controllers.NewDashboardController()
 	auth := controllers.NewAuthController()
+	myAccount := controllers.NewMyAccountController()
 
-	facades.Route().Prefix(prefix).
+	facades.Route().
+		Prefix(prefix).
+		Middleware(middleware.SendRequestCtx()).
 		Group(func(router routeFacade.Router) {
 			// guest routes
 			router.Get("/user/login", auth.Login)
@@ -23,8 +26,13 @@ func RegisterRoutes(route routeFacade.Router, prefix string) {
 				Group(func(router routeFacade.Router) {
 					// auth routes
 					router.Get("/", dashboard.RedirectFirstPage)
-					router.Get("/dashboard", dashboard.Index)
 					router.Get("/user/logout", auth.Logout)
+					// my account routes
+					router.Get("/user/profile", myAccount.MyAccountPage)
+					router.Post("/user/profile/info", myAccount.SaveInfo)
+					router.Post("/user/profile/password", myAccount.SavePassword)
+					// dashboard routes
+					router.Get("/dashboard", dashboard.Index)
 				})
 		})
 

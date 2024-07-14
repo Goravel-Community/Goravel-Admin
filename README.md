@@ -11,3 +11,14 @@ go run . artisan vendor:publish --package=github.com/goravel-community/goravel-a
 # migrate
 go run . artisan migrate
 ```
+
+### Checklist
+
+✅ make login via session
+
+✅ install and configure templ
+
+⬜ frontend for login
+
+⬜ change email and name page
+
