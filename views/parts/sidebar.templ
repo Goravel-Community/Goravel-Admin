@@ -1,0 +1,15 @@
+package parts
+
+import "github.com/goravel-community/goravel-admin/helpers"
+
+templ Sidebar() {
+	<div class="sidebar">
+		<div class="sidebar-content">
+			<div class="sidebar-header">
+				<div class="sidebar-logo">
+					{ helpers.GetConfigString("name") }
+				</div>
+			</div>
+		</div>
+	</div>
+}

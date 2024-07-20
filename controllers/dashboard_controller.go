@@ -3,8 +3,8 @@ package controllers
 import (
 	"github.com/goravel-community/goravel-admin/helpers"
 	"github.com/goravel-community/goravel-admin/models"
+	"github.com/goravel-community/goravel-admin/views"
 	"github.com/goravel/framework/contracts/http"
-	"github.com/goravel/framework/facades"
 )
 
 type DashboardController struct {
@@ -28,7 +28,5 @@ func (r *DashboardController) Index(ctx http.Context) http.Response {
 	if admin, ok := ctx.Value("admin").(*models.Admin); ok && admin != nil {
 		welcomeString = "Welcome to the dashboard: " + admin.Email
 	}
-	return ctx.Response().Success().Json(http.Json{
-		"dashboard": welcomeString,
-	})
+	return RenderTempl(ctx, views.Dashboard(welcomeString))
 }

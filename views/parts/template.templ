@@ -1,22 +1,13 @@
 package parts
 
 templ Template() {
-    <!DOCTYPE html>
-    <html>
-        <head>
-            <title>Goravel Admin</title>
-            <meta charset="utf-8"/>
-            <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
-            <meta name="robots" content="noindex, nofollow, nosnippet, noarchive, noimageindex" />
-
-            <!-- Your styles go here -->
-            <link rel="stylesheet" href="/admin/assets/css/base.css">
-        </head>
-        <body>
-            { children... }
-            <!-- Your scripts go here -->
-            <script src="//unpkg.com/alpinejs" defer></script>
-        </body>
-    </html>
+	@BaseTemplate() {
+		@Sidebar()
+		<div class="main-content">
+			@TopBar()
+			<div class="main-content-inner">
+				{ children... }
+			</div>
+		</div>
+	}
 }
