@@ -1,6 +1,8 @@
 package helpers
 
 import (
+	"strings"
+
 	"github.com/goravel/framework/contracts/http"
 )
 
@@ -13,7 +15,8 @@ func ValidationErrors(input any) (errors ValidationErrorsMap) {
 			if listString, ok := list.(map[string]any); ok {
 				errors[fieldName] = make(map[string]string, len(listString))
 				for rule, errMessage := range listString {
-					errors[fieldName][rule] = errMessage.(string)
+					msg := errMessage.(string)
+					errors[fieldName][rule] = StringTitle(msg)
 				}
 			}
 		}
@@ -29,4 +32,10 @@ func ValidationErrorsFromRequest(req *http.ContextRequest) (errors ValidationErr
 		}
 	}
 	return make(ValidationErrorsMap, 0)
+}
+
+func StringTitle(input string) string {
+	bytes := []byte(strings.TrimSpace(input))
+	bytes[0] = []byte(strings.ToUpper(string(bytes[0])))[0]
+	return string(bytes)
 }

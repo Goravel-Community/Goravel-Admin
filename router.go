@@ -1,11 +1,18 @@
 package goravel_admin
 
 import (
+	"embed"
+	"io/fs"
+	"net/http"
+
 	"github.com/goravel-community/goravel-admin/controllers"
 	"github.com/goravel-community/goravel-admin/middleware"
 	routeFacade "github.com/goravel/framework/contracts/route"
 	"github.com/goravel/framework/facades"
 )
+
+//go:embed public/assets/*
+var publicAssetsFS embed.FS
 
 // Import the missing package
 
@@ -18,6 +25,9 @@ func RegisterRoutes(route routeFacade.Router, prefix string) {
 		Prefix(prefix).
 		Middleware(middleware.SendRequestCtx()).
 		Group(func(router routeFacade.Router) {
+			// serve static assets
+			publicAssetsFSPrefix, _ := fs.Sub(publicAssetsFS, "public/assets")
+			router.StaticFS("assets", http.FS(publicAssetsFSPrefix))
 			// guest routes
 			router.Get("/user/login", auth.Login)
 			router.Post("/user/login", auth.PostLogin)

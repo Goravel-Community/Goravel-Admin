@@ -4,6 +4,8 @@
 # Installation
 
 ```bash
+# install goravel-admin
+go get -u github.com/goravel-community/goravel-admin
 # publish configs
 go run . artisan vendor:publish --package=github.com/goravel-community/goravel-admin --tag=goravel-admin-config
 # publish migrations
@@ -18,7 +20,9 @@ go run . artisan migrate
 
 ✅ install and configure templ
 
-⬜ frontend for login
+✅ frontend for login
+
+⬜ logged in template
 
 ⬜ change email and name page
 

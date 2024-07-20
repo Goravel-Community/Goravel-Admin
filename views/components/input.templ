@@ -1,0 +1,55 @@
+package components
+
+import (
+	"context"
+	"github.com/goravel-community/goravel-admin/helpers"
+)
+
+type InputAttrs struct {
+	Label       string
+	Placeholder string
+	Name        string
+	Input       string
+	Value       string
+}
+
+func getAttr(attrs InputAttrs) InputAttrs {
+	if attrs.Input == "" {
+		attrs.Input = "text"
+	}
+	return attrs
+}
+
+func getInputErrors(ctx context.Context, name string) (errors map[string]string) {
+	if req := helpers.GetRequestFromCtx(ctx); req != nil {
+		if errorMap, ok := helpers.ValidationErrorsFromRequest(req)[name]; ok {
+			return errorMap
+		}
+	}
+	return errors
+}
+
+templ Input(attrs InputAttrs) {
+	@renderInput(getAttr(attrs))
+}
+
+templ renderInput(attrs InputAttrs) {
+	<label
+		class={ helpers.ClassList(map[string]bool{
+            "input-component": true,
+            "input-name-"+attrs.Name: true,
+            "input-has-errors": len(getInputErrors(ctx, attrs.Name)) > 0,
+        }) }
+	>
+		<span>{ attrs.Label }</span>
+		<input
+			type={ attrs.Input }
+			name={ attrs.Name }
+			placeholder={ attrs.Placeholder }
+			value={ attrs.Value }
+		/>
+		for _,  errorMessage := range getInputErrors(ctx, attrs.Name) {
+			<div class="input-error">{ errorMessage }</div>
+		}
+	</label>
+}
