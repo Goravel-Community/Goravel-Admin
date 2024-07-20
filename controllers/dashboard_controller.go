@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"github.com/goravel-community/goravel-admin/helpers"
 	"github.com/goravel-community/goravel-admin/models"
 	"github.com/goravel/framework/contracts/http"
 	"github.com/goravel/framework/facades"
@@ -17,8 +18,8 @@ func NewDashboardController() *DashboardController {
 }
 
 func (r *DashboardController) RedirectFirstPage(ctx http.Context) http.Response {
-	prefix := facades.Config().Get("goravel_admin.route", "/admin").(string)
-	first_page := facades.Config().Get("goravel_admin.first_page", "/dashboard").(string)
+	prefix := helpers.GetConfigString("route")
+	first_page := helpers.GetConfigString("first_page")
 	return ctx.Response().Redirect(302, prefix+first_page)
 }
 
