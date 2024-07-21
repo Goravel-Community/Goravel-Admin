@@ -43,6 +43,7 @@ func RegisterRoutes(route routeFacade.Router, prefix string) {
 					router.Post("/user/profile/password", myAccount.SavePassword)
 					// dashboard routes
 					router.Get("/dashboard", dashboard.Index)
+					router.Get("/products", dashboard.Products)
 				})
 		})
 

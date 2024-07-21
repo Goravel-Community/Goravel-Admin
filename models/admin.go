@@ -1,6 +1,11 @@
 package models
 
-import "github.com/goravel/framework/database/orm"
+import (
+	"crypto/sha256"
+	"fmt"
+
+	"github.com/goravel/framework/database/orm"
+)
 
 type Admin struct {
 	orm.Model
@@ -11,4 +16,11 @@ type Admin struct {
 
 func (r *Admin) TableName() string {
 	return "admins"
+}
+
+func (r *Admin) GetAvatar() string {
+	h := sha256.New()
+	h.Write([]byte(r.Email))
+	bs := h.Sum(nil)
+	return "https://www.gravatar.com/avatar/" + fmt.Sprintf("%x", bs) + "?d=mp"
 }

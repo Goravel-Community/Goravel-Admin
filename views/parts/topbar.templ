@@ -1,5 +1,114 @@
 package parts
 
+import (
+	"context"
+	
+	"github.com/goravel-community/goravel-admin/helpers"
+	"github.com/goravel-community/goravel-admin/models"
+)
+
+func getAdmin(ctx context.Context) (admin *models.Admin) {
+	if ctxAdmin := ctx.Value("admin"); ctxAdmin != nil {
+		if admin, ok := ctxAdmin.(*models.Admin); ok {
+			return admin
+		}
+	}
+	return nil
+}
+
 templ TopBar() {
-    top
+	<div class="topbar">
+		<div class="topbar-content container">
+			<div class="topbar-right">
+				<div :class="{ 'dropdown-menu-wrapper': true, 'is-open': open }" x-data="{ open: false }">
+					<div class="dropdown-menu-button" @click="open = !open">
+						<img src={ getAdmin(ctx).GetAvatar() } alt="avatar" class="user-avatar-small-btn" />
+						<span>{ getAdmin(ctx).Email }</span>
+						<img src={ helpers.AdminRoute("/assets/images/arrow-down-grey.svg") } alt="arrow-down-grey" class="arrow-down-grey" />
+					</div>
+					<div class="dropdown-menu-content" x-cloak x-show="open" @click.away="open = false">
+						<a href={ templ.SafeURL(helpers.AdminRoute("/user/profile")) }>
+							My Account
+						</a>
+						<a href={ templ.SafeURL(helpers.AdminRoute("/user/logout")) }>
+							Logout
+						</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<style>
+        .dropdown-menu-wrapper {
+            position: relative;
+			height: 100%;
+		}
+        .dropdown-menu-button {
+			display: flex;
+			flex-direction: row;
+			align-items: center;
+			height: 100%;
+			cursor: pointer;
+			padding: 0 20px;
+			gap: 8px;
+			transition: background 250ms ease-in-out;
+			background: transparent;
+		}
+        .dropdown-menu-button:hover,
+        .dropdown-menu-wrapper.is-open .dropdown-menu-button {
+			background: #CDD3FF;
+		}
+		.dropdown-menu-button .arrow-down-grey {
+			transition: transform 150ms ease-in-out;
+		}
+        .dropdown-menu-wrapper.is-open .dropdown-menu-button .arrow-down-grey {
+			transform: rotate(180deg);
+		}
+		.dropdown-menu-content {
+			position: absolute;
+			top: 100%;
+			left: 0;
+			right: 0;
+			background: #f7f7f7;
+			border: 1px solid #CAD1FF;
+			padding: 8px 0;
+			border-bottom-left-radius: 8px;
+			border-bottom-right-radius: 8px;
+			display: flex;
+			flex-direction: column;
+			align-items: stretch;
+		}
+		.dropdown-menu-content a {
+			display: block;
+			padding: 8px 10px;
+			transition: background 250ms ease-in-out;
+			background: transparent;
+		}
+		.dropdown-menu-content a:hover {
+			background: #cdd3ff;
+		}
+	</style>
+	<style>
+    .topbar {
+        background: #E7EAFF;
+        border-bottom: 1px solid #CAD1FF;
+        height: 40px;
+    }
+    .topbar-content {
+        height: 100%;
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+    }
+    .topbar-right {
+        margin-left: auto;
+		height: 100%;
+    }
+	.user-avatar-small-btn {
+		border-radius: 50%;
+		width: 30px;
+		height: 30px;
+		object-fit: cover;
+	}
+    </style>
 }

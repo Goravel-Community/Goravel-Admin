@@ -1,15 +1,90 @@
 package parts
 
-import "github.com/goravel-community/goravel-admin/helpers"
+import (
+	"context"
+	"github.com/goravel-community/goravel-admin/helpers"
+	"github.com/goravel/framework/contracts/http"
+)
 
 templ Sidebar() {
+	<div class="sidebar-fake"></div>
 	<div class="sidebar">
 		<div class="sidebar-content">
 			<div class="sidebar-header">
-				<div class="sidebar-logo">
+				<a href={ templ.SafeURL(helpers.AdminRoute(helpers.GetConfigString("first_page"))) } class="sidebar-logo">
 					{ helpers.GetConfigString("name") }
-				</div>
+				</a>
+			</div>
+			<div class="sidebar-items">
+				if items := helpers.GetConfig("sidebar"); items != nil {
+					if getItems, ok := items.(func(context.Context, *http.ContextRequest) string); ok {
+						@templ.Raw(getItems(ctx, helpers.GetRequestFromCtx(ctx)))
+					}
+				}
 			</div>
 		</div>
 	</div>
+	<style>
+	.sidebar-fake {
+		width: 200px;
+		height: 100%;
+		flex-shrink: 0;
+	}
+	.sidebar {
+		position: fixed;
+		top: 0;
+		left: 0;
+		background: #f7f7f7;
+		width: 200px;
+		height: 100%;
+	}
+	.sidebar-header {
+		height: 40px;
+		display: flex;
+		flex-direction: row;
+		align-items: center;
+		justify-content: center;
+		color: #0017ad;
+		font-weight: bold;
+	}
+	.sidebar-header .sidebar-logo {
+		padding: 4px 8px;
+		transition: background 250ms ease-in-out;
+		background: transparent;
+		border-radius: 8px;
+	}
+	.sidebar-header .sidebar-logo:hover {
+		background: #cdd3ff;
+	}
+	.sidebar-items {
+		display: flex;
+		flex-direction: column;
+		align-items: stretch;
+		gap: 4px;
+	}
+	.sidebar-items a {
+		position: relative;
+		display: block;
+		padding: 8px 10px;
+		transition: transform 150ms ease-in-out;
+	}
+	.sidebar-items a:hover {
+		transform: translateX(10px);
+	}
+	.sidebar-items a.active {
+		transform: translateX(10px);
+		background: #cdd3ff;
+		width: calc(100% - 10px);
+	}
+	.sidebar-items a.active::before {
+		content: '';
+		position: absolute;
+		top: 0;
+		left: 0;
+		background: #0017ad;
+		width: 4px;
+		height: 100%;
+		transform: scale(0.8);
+	}
+	</style>
 }

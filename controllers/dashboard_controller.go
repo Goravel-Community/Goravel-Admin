@@ -30,3 +30,8 @@ func (r *DashboardController) Index(ctx http.Context) http.Response {
 	}
 	return RenderTempl(ctx, views.Dashboard(welcomeString))
 }
+
+func (r *DashboardController) Products(ctx http.Context) http.Response {
+	welcomeString := "hihihihi"
+	return RenderTempl(ctx, views.Dashboard(welcomeString))
+}

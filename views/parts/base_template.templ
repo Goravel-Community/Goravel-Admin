@@ -1,5 +1,7 @@
 package parts
 
+import "github.com/goravel-community/goravel-admin/helpers"
+
 templ BaseTemplate() {
     <!DOCTYPE html>
     <html>
@@ -11,7 +13,8 @@ templ BaseTemplate() {
             <meta name="robots" content="noindex, nofollow, nosnippet, noarchive, noimageindex" />
 
             <!-- Your styles go here -->
-            <link rel="stylesheet" href="/admin/assets/css/base.css">
+            <link rel="stylesheet" href={ helpers.AdminRoute("/assets/css/base.css") }>
+            <style> [x-cloak] { display: none !important; } </style>
         </head>
         <body>
             { children... }

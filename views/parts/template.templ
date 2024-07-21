@@ -2,12 +2,21 @@ package parts
 
 templ Template() {
 	@BaseTemplate() {
-		@Sidebar()
-		<div class="main-content">
-			@TopBar()
-			<div class="main-content-inner">
-				{ children... }
+		<div class="main-content-wrapper">
+			@Sidebar()
+			<div class="main-content">
+				@TopBar()
+				<div class="main-content-inner">
+					{ children... }
+				</div>
 			</div>
 		</div>
+		<style>
+			.main-content-wrapper {
+				display: flex;
+				flex-direction: row;
+				min-height: 100vh;
+			}
+		</style>
 	}
 }

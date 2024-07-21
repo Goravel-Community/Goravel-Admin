@@ -22,7 +22,11 @@ go run . artisan migrate
 
 ✅ frontend for login
 
-⬜ logged in template
+✅ logged in template frontend
 
 ⬜ change email and name page
+
+⬜ integrate crud controller - list view
+
+⬜ crud - edit/create view
 
